@@ -18,3 +18,4 @@ Project Setup:
 ## Assignment 2
 
 1. Dynamic Search option: Highlights user text entered wherever found in website main content
+2. Latest Posts: Loads latest posts from latestPosts.json to required pages
