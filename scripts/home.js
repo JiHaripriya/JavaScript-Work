@@ -2,6 +2,7 @@ import createJsonRequest from "./utils.js";
 
 let method = 'GET', url = "http://127.0.0.1:5500/apis/home.json";
 
+// Dynamic Home Page Data
 createJsonRequest( method, url, function( err, response ) {
 
     if(err) { 
@@ -61,6 +62,7 @@ createJsonRequest( method, url, function( err, response ) {
             }
         });
 
+        // If the text is longer than limit, add read more button
         if (contentText.length > response.textVisibleLength){
             parentDivElement.appendChild(buttonReadMore);
         }
@@ -87,3 +89,4 @@ createJsonRequest( method, url, function( err, response ) {
         tableHead.appendChild(tableRow);
     }
 });
+

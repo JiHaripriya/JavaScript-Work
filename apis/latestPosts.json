@@ -1,0 +1,25 @@
+{
+    "articleHeading": "Latest Posts",
+    "latestPosts": [
+        {
+            "imageSource": "http://127.0.0.1:5500/images/post-image.jpg",
+            "altText": "Yellow Flowers",
+            "href": "#"
+        },
+        {
+            "imageSource": "http://127.0.0.1:5500/images/post-image.jpg",
+            "altText": "Yellow Flowers",
+            "href": "#"
+        },
+        {
+            "imageSource": "http://127.0.0.1:5500/images/post-image.jpg",
+            "altText": "Yellow Flowers",
+            "href": "#"
+        },
+        {
+            "imageSource": "http://127.0.0.1:5500/images/post-image.jpg",
+            "altText": "Yellow Flowers",
+            "href": "#"
+        }
+    ]
+}

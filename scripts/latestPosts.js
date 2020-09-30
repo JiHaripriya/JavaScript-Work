@@ -1,7 +1,7 @@
 import createJsonRequest from "./utils.js";
 
 var method = 'GET',
-url = "http://127.0.0.1:5500/apis/home.json";
+url = "http://127.0.0.1:5500/apis/latestPosts.json";
 
 createJsonRequest( method, url, function( err, response ) {
 
