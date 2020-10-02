@@ -18,14 +18,14 @@
         "name": "Job Code No.",
         "type": "number",
         "text": null,
-        "sortable": false
+        "sortable": true
     }, 
     {
         "key": "lastDate",
         "name": "Last Date of Application",
         "type": "date",
         "text": null,
-        "sortable": false
+        "sortable": true
     }, 
     {
         "key": "availability",

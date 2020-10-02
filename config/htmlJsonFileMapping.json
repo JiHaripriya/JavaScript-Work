@@ -1,0 +1,11 @@
+[
+    {
+        "html": "index.html",
+        "table": "http://127.0.0.1:5500/apis/tableHome.json"
+        
+    },
+    {
+        "html": "services.html",
+        "table": "http://127.0.0.1:5500/apis/tableServices.json"
+    }
+]

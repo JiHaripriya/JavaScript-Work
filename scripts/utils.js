@@ -18,13 +18,13 @@ var createJsonRequest = (httpMethod, url, callback) => {
 }
 
 export default createJsonRequest;
+
 /*.................................................................................................................*/
 
-// Search - Highlight
 const searchBar = document.getElementById("search");
 
 searchBar.addEventListener(('click'), () => {
-    if (searchBar.value != ""){
+    if (searchBar.value != "") {
         window.location.reload();
     }
 });
@@ -49,10 +49,67 @@ searchBar.addEventListener('keyup', (event) => {
 
 /*.................................................................................................................*/
 
+var getDataArrays = (tableColumns) => {
+    let keys = [], types = [],texts =[];
+    for(let column of tableColumns) {
+        keys.push(column.key);
+        types.push(column.type);
+        texts.push(column.text);
+    }
+    return [keys, types, texts];
+}
+
+/*.................................................................................................................*/
+var sort = (buttonId, dataType, tableColumns) => {
+
+    const table = document.querySelector("#pageTable tbody");
+
+    //Remove table content from html
+    while (table.firstChild) {
+        table.removeChild(table.lastChild);
+    }
+
+    // Which html is calling?
+    const htmlName = document.location.href.split("/").pop(); // Get file name
+    
+    // Load json from mapping file
+    createJsonRequest("GET", "http://127.0.0.1:5500/config/htmlJsonFileMapping.json", (err, response) => {
+        for (let page of response) {
+            if (page.html == htmlName){
+                // Request to corresponding JSON for table content
+                createJsonRequest("GET", page.table, (err, tableRows) => {
+
+                    let tableContent = JSON.stringify(tableRows);
+                    const replaceWith = new RegExp(`${buttonId}`, "g") // replace original key with buttonId
+                    tableContent = JSON.parse(tableContent.replace(replaceWith, "buttonId"));
+                    tableColumns = JSON.parse(JSON.stringify(tableColumns).replace(replaceWith, "buttonId"));
+
+                    if (dataType == "string" || dataType == "link" || dataType == "date") {
+                        tableContent.sort( (a, b) => {
+                            return a.buttonId > b.buttonId ? 1 : -1;
+                        });    
+                    }
+                    else if (dataType == "number"){
+                        tableContent.sort( (a, b) => {
+                            return a.buttonId - b.buttonId;
+                        });    
+                    }
+
+                    // Construct table body again
+                    const result = getDataArrays(tableColumns);     
+                    const keys = result[0], types = result[1], texts = result[2];
+                    constructTableContent(tableContent, keys, types, texts);
+                });
+            }
+        }
+    });
+}
+
+/*.................................................................................................................*/
+
 // Table Header creation
 var tableHeader = (httpMethod, tableHeaderUrl) => {
-    createJsonRequest(httpMethod, tableHeaderUrl, function(err, response) {
-
+    createJsonRequest(httpMethod, tableHeaderUrl, (err, response) => {
         const table = document.querySelector("#pageTable thead");
         const tableHeadRow = document.createElement("tr");
 
@@ -66,16 +123,96 @@ var tableHeader = (httpMethod, tableHeaderUrl) => {
             if (column.sortable) {
                 const button = document.createElement("button");
                 button.innerText = "Sort";
+
+                // to identify which button is clicked
+                button.setAttribute("id", column.key);
+                button.addEventListener('click', () => {
+                    sort(button.id, column.type, response);
+                });
+
                 heading.style.textAlign = "center";
                 heading.appendChild(button);
             }
             tableHeadRow.appendChild(heading);
         }
-        table.appendChild(tableHeadRow)
-        
+        table.appendChild(tableHeadRow);
     });
 }
+
 export {tableHeader};
+
+/*.................................................................................................................*/
+
+var constructTableContent = (tableRows, keys, types, texts) => {
+    const table = document.querySelector("#pageTable tbody");
+    for(let column of tableRows) {
+        const tableHeadRow = document.createElement("tr");
+
+        for (let key in column) {
+            
+            const tableData = document.createElement("td");
+            const dataIndex = keys.indexOf(key);
+
+            const isValid = (value) => {
+                tableData.innerText = value != "-" ? value: "-";
+            }
+
+            const isLink = (link, value, text) => {
+                if (value != "-") {
+                    link.style.textDecoration = "underline";
+                    link.setAttribute("href", value);
+                    link.innerText = text;
+                }
+                else {
+                    link.innerText = "-";
+                }
+                link.style.color = "#ffffff";
+                tableData.appendChild(link);
+            }
+
+            const isAvailable = (button, availability) => {
+                if (availability) {
+                    tableData.appendChild(button);
+                }
+                else {
+                    tableData.innerText = "-";
+                    tableData.style.textAlign = "center";
+                }
+            }
+
+            // valid column check
+            if(keys.indexOf(key) != -1) {
+
+                if (types[dataIndex] == "string") {
+                    tableData.style.textAlign = "left";
+                    isValid(column[key]);
+                }
+                else if (types[dataIndex] == "link") {
+                    tableData.style.textAlign = "left";
+                    const link = document.createElement("a");
+                    isLink(link, column[key], texts[dataIndex])
+                }
+                else if (types[dataIndex] == "number") {
+                    tableData.style.textAlign = "right";
+                    tableData.style.paddingRight = "10px";
+                    isValid(column[key]);
+                }
+                else if (types[dataIndex] == "date") {
+                    tableData.style.textAlign = "right";
+                    tableData.style.paddingRight = "10px";
+                    isValid(column[key]);
+                }
+                else if (types[dataIndex] == "button") {
+                    const button = document.createElement("button");
+                    button.innerText = texts[dataIndex];
+                    isAvailable(button, column[key]);
+                }
+            }
+            tableHeadRow.appendChild(tableData);                   
+        }
+        table.appendChild(tableHeadRow)   
+    }  
+}
 
 /*.................................................................................................................*/
 
@@ -83,86 +220,10 @@ export {tableHeader};
 var tableContent = (httpMethod, tableHeaderUrl, tableContentUrl) => {
 
     createJsonRequest(httpMethod, tableHeaderUrl, function(err, tableColumns) {
-
-        let keys = [], types = [],texts =[];
-        for(let column of tableColumns) {
-            keys.push(column.key);
-            types.push(column.type);
-            texts.push(column.text);
-        }
-        
-        createJsonRequest(httpMethod, tableContentUrl, function(err, tableRows) {
-
-            const table = document.querySelector("#pageTable tbody");
-            console.log(tableRows)
-
-            for(let column of tableRows) {
-                const tableHeadRow = document.createElement("tr");
-
-                for (let key in column) {
-                    
-                    const tableData = document.createElement("td");
-                    const dataIndex = keys.indexOf(key);
-
-                    const isValid = (value) => {
-                        tableData.innerText = value != "-" ? value: "-";
-                    }
-
-                    const isLink = (link, value, text) => {
-                        if (value != "-") {
-                            link.style.textDecoration = "underline";
-                            link.setAttribute("href", value);
-                            link.innerText = text;
-                        }
-                        else {
-                            link.innerText = "-";
-                        }
-                        link.style.color = "#ffffff";
-                        tableData.appendChild(link);
-                    }
-
-                    const isAvailable = (button, availability) => {
-                        if (availability){
-                            tableData.appendChild(button);
-                        }
-                        else {
-                            tableData.innerText = "-";
-                            tableData.style.textAlign = "center";
-                        }
-                    }
-
-                    // valid column check
-                    if(keys.indexOf(key) != -1) {
-
-                        if (types[dataIndex] == "string"){
-                            tableData.style.textAlign = "left";
-                            isValid(column[key]);
-                        }
-                        else if (types[dataIndex] == "link"){
-                            tableData.style.textAlign = "left";
-                            const link = document.createElement("a");
-                            isLink(link, column[key], texts[dataIndex])
-                        }
-                        else if (types[dataIndex] == "number") {
-                            tableData.style.textAlign = "right";
-                            tableData.style.paddingRight = "10px";
-                            isValid(column[key]);
-                        }
-                        else if (types[dataIndex] == "date"){
-                            tableData.style.textAlign = "right";
-                            tableData.style.paddingRight = "10px";
-                            isValid(column[key]);
-                        }
-                        else if (types[dataIndex] == "button"){
-                            const button = document.createElement("button");
-                            button.innerText = texts[dataIndex];
-                            isAvailable(button, column[key]);
-                        }
-                    }
-                    tableHeadRow.appendChild(tableData);                   
-                }
-                table.appendChild(tableHeadRow)   
-            }  
+        const result = getDataArrays(tableColumns);     
+        const keys = result[0], types = result[1], texts = result[2];
+        createJsonRequest(httpMethod, tableContentUrl, (err, tableRows) => {
+            constructTableContent(tableRows, keys, types, texts);
         });
     });
 }
