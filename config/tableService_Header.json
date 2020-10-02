@@ -1,6 +1,6 @@
 [
     {
-        "key": "name",
+        "key": "title",
         "name": "Services",
         "type": "string",
         "text": null,
