@@ -1,4 +1,6 @@
 import createJsonRequest from "./utils.js";
+import {tableHeader} from "./utils.js";
+import {tableContent} from "./utils.js";
 
 var method = 'GET',
 url = "http://127.0.0.1:5500/apis/menu.json";
@@ -10,7 +12,6 @@ createJsonRequest( method, url, function( err, response ) {
     }
     else {
         /* Element to create ~
-
             <title>RMedia</title>
             <h2>
                 RMedia
@@ -31,3 +32,9 @@ createJsonRequest( method, url, function( err, response ) {
         });  
     }
 });
+
+const tableHeaderUrl = "http://127.0.0.1:5500/config/tableService_Header.json",
+tableContentUrl = "http://127.0.0.1:5500/apis/tableServices.json";
+
+tableHeader(method, tableHeaderUrl);
+tableContent(method, tableHeaderUrl, tableContentUrl);

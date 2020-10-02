@@ -1,5 +1,5 @@
-import createJsonRequest from "./utils.js";
-import jsonTable from "./utils.js";
+import createJsonRequest, { tableContent } from "./utils.js";
+import {tableHeader} from "./utils.js";
 
 let method = 'GET', url = "http://127.0.0.1:5500/apis/home.json";
 
@@ -14,9 +14,7 @@ createJsonRequest( method, url, function( err, response ) {
         const parentDivElement = document.querySelector(".text-wrap");
         /* 
             Element to create ~
-            <h2>
-                RMedia<img src="images/main-image.jpg" alt="" class="img-wrap">
-            </h2>
+            <h2> RMedia<img src="images/main-image.jpg" alt="" class="img-wrap"></h2>
         */
         const heading = document.createElement('h2');
         heading.innerText = response.contentHeading;
@@ -74,42 +72,13 @@ createJsonRequest( method, url, function( err, response ) {
     }
 });
 
-// Dynamic Home Page Table Data
-/*
-    Structure
-    ---------
-    <thead >
-        <tr>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td> </td>
-        </tr>
-    </tbody>
-    
-    const tableHead = document.querySelector("table thead");
-    const tableRow = document.createElement("tr");
-    response.tableHeaders.forEach(element => {
-        const rowHead = document.createElement("th");
-        rowHead.innerText = element; 
-        tableRow.appendChild(rowHead);
-    });
-    tableHead.appendChild(tableRow);
-*/
 
-// Table header
-url = "http://127.0.0.1:5500/config/tableHome_Header.json";
 
-createJsonRequest(method, url, (err, response) => {
+const tableHeaderUrl = "http://127.0.0.1:5500/config/tableHome_Header.json",
+tableContentUrl = "http://127.0.0.1:5500/apis/tableHome.json";
 
-    if(err) { 
-        console.log("Error occured while processing JSON!"); 
-    }
-    else 
-    {
-        // console.log(location.href); --> to understand which page is sending request
-        console.log("response: ", response);
-    }
-});
+tableHeader(method, tableHeaderUrl);
+tableContent(method, tableHeaderUrl, tableContentUrl);
+
+
+
