@@ -1,0 +1,37 @@
+[
+    {
+        "key": "title",
+        "name": "Job Title",
+        "type": "string",
+        "text": null,
+        "sortable": true
+    }, 
+    {
+        "key": "href",
+        "name": "Location",
+        "type": "link",
+        "text": "Office",
+        "sortable": false
+    }, 
+    {
+        "key": "jobCode",
+        "name": "Job Code No.",
+        "type": "number",
+        "text": null,
+        "sortable": false
+    }, 
+    {
+        "key": "lastDate",
+        "name": "Last Date of Application",
+        "type": "date",
+        "text": null,
+        "sortable": false
+    }, 
+    {
+        "key": "availability",
+        "name": "Position Availability",
+        "type": "button",
+        "text": "Apply",
+        "sortable": false
+    }
+]

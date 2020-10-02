@@ -1,4 +1,5 @@
-import createJsonRequest from "./utils.js";
+import createJsonRequest, { tableContent } from "./utils.js";
+import {tableHeader} from "./utils.js";
 
 let method = 'GET', url = "http://127.0.0.1:5500/apis/home.json";
 
@@ -13,10 +14,7 @@ createJsonRequest( method, url, function( err, response ) {
         const parentDivElement = document.querySelector(".text-wrap");
         /* 
             Element to create ~
-            <h2>
-                RMedia
-                <img src="images/main-image.jpg" alt="" class="img-wrap">
-            </h2>
+            <h2> RMedia<img src="images/main-image.jpg" alt="" class="img-wrap"></h2>
         */
         const heading = document.createElement('h2');
         heading.innerText = response.contentHeading;
@@ -66,27 +64,21 @@ createJsonRequest( method, url, function( err, response ) {
         if (contentText.length > response.textVisibleLength){
             parentDivElement.appendChild(buttonReadMore);
         }
-        
-        /* ================================================================================= */
-        /*
-            <!--Make dynamic-->
-            <thead >
-                <tr>
-                    <th>Lorem</th>
-                    <th>Lorem</th>
-                    <th>Lorem</th>
-                    <th>Lorem</th>
-                </tr>
-            </thead>
-        */
-        const tableHead = document.querySelector("table thead");
-        const tableRow = document.createElement("tr");
-        response.tableHeaders.forEach(element => {
-            const rowHead = document.createElement("th");
-            rowHead.innerText = element; 
-            tableRow.appendChild(rowHead);
-        });
-        tableHead.appendChild(tableRow);
+
+        // Table Area heading
+        const tableHead = document.querySelector(".table__heading");
+        tableHead.innerText = response.tableHeading;
+        parentDivElement.appendChild(tableHead);
     }
 });
+
+
+
+const tableHeaderUrl = "http://127.0.0.1:5500/config/tableHome_Header.json",
+tableContentUrl = "http://127.0.0.1:5500/apis/tableHome.json";
+
+tableHeader(method, tableHeaderUrl);
+tableContent(method, tableHeaderUrl, tableContentUrl);
+
+
 

@@ -1,0 +1,23 @@
+[
+    {
+        "key": "title",
+        "name": "Services",
+        "type": "string",
+        "text": null,
+        "sortable": false
+    }, 
+    {
+        "key": "href",
+        "name": "Page URL",
+        "type": "link",
+        "text": "Go to Page",
+        "sortable": true
+    }, 
+    {
+        "key": "rating",
+        "name": "Rating out of 50",
+        "type": "number",
+        "text": null,
+        "sortable": false
+    }
+]

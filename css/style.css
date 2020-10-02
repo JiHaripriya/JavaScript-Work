@@ -9,8 +9,12 @@ body{
     font-family: arial, helvetica, sans-serif;
 }
 
-h2 {
+h2, h3 {
     padding: 0 0 0 15px;
+}
+
+h3 {
+    padding: 0 0 30px 15px;
 }
 
 p {

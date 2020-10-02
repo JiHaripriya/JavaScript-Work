@@ -1,0 +1,30 @@
+[   
+    {
+        "title": "Senior DevOps Engineer",
+        "href": "#",
+        "jobCode": 33,
+        "lastDate": "-",
+        "availability": false
+    }, 
+    {
+        "title": "Senior React Developer",
+        "href": "#",
+        "jobCode": 21,
+        "lastDate": "2020-10-08",
+        "availability": true
+    }, 
+    {
+        "title": "Senior Angular Developer",
+        "href": "-",
+        "jobCode": 15,
+        "lastDate": "2020-11-18",
+        "availability": true
+    }, 
+    {
+        "title": "Digital Marketing Head",
+        "href": "#",
+        "jobCode": 6,
+        "lastDate": "2020-10-17",
+        "availability": false
+    }
+]

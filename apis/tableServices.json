@@ -1,0 +1,17 @@
+[   
+    {
+        "title": "Service 1",
+        "href": "#",
+        "rating": 33
+    }, 
+    {
+        "title": "Service 2",
+        "href": "#",
+        "rating": 21
+    }, 
+    {
+        "title": "Service 3",
+        "href": "-",
+        "rating": 45
+    }
+]

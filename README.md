@@ -19,3 +19,4 @@ Project Setup:
 
 1. Dynamic Search option: Highlights user text entered wherever found in website main content
 2. Latest Posts: Loads latest posts from latestPosts.json to required pages
+3. Dynamic Table: Generates table data with table header from `config` folder and table data from `apis`.
