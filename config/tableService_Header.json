@@ -11,13 +11,13 @@
         "name": "Page URL",
         "type": "link",
         "text": "Go to Page",
-        "sortable": true
+        "sortable": false
     }, 
     {
         "key": "rating",
         "name": "Rating out of 50",
         "type": "number",
         "text": null,
-        "sortable": false
+        "sortable": true
     }
 ]

@@ -60,48 +60,59 @@ var getDataArrays = (tableColumns) => {
 }
 
 /*.................................................................................................................*/
+
 var sort = (buttonId, dataType, tableColumns) => {
 
-    const table = document.querySelector("#pageTable tbody");
-
-    //Remove table content from html
-    while (table.firstChild) {
-        table.removeChild(table.lastChild);
+    // Which html is calling?
+    const htmlName = window.location.href.split("/").pop(); // Get file name
+    if (!htmlName) {
+        window.location.href = "http://127.0.0.1:5500/index.html"; // manual redirection due to lack of indexing
     }
 
-    // Which html is calling?
-    const htmlName = document.location.href.split("/").pop(); // Get file name
-    
     // Load json from mapping file
     createJsonRequest("GET", "http://127.0.0.1:5500/config/htmlJsonFileMapping.json", (err, response) => {
-        for (let page of response) {
-            if (page.html == htmlName){
-                // Request to corresponding JSON for table content
-                createJsonRequest("GET", page.table, (err, tableRows) => {
-
-                    let tableContent = JSON.stringify(tableRows);
-                    const replaceWith = new RegExp(`${buttonId}`, "g") // replace original key with buttonId
-                    tableContent = JSON.parse(tableContent.replace(replaceWith, "buttonId"));
-                    tableColumns = JSON.parse(JSON.stringify(tableColumns).replace(replaceWith, "buttonId"));
-
-                    if (dataType == "string" || dataType == "link" || dataType == "date") {
-                        tableContent.sort( (a, b) => {
-                            return a.buttonId > b.buttonId ? 1 : -1;
-                        });    
-                    }
-                    else if (dataType == "number"){
-                        tableContent.sort( (a, b) => {
-                            return a.buttonId - b.buttonId;
-                        });    
-                    }
-
-                    // Construct table body again
-                    const result = getDataArrays(tableColumns);     
-                    const keys = result[0], types = result[1], texts = result[2];
-                    constructTableContent(tableContent, keys, types, texts);
-                });
-            }
+        if (err) {
+            alert("JSON loading pending");
         }
+        else {
+            const table = document.querySelector("#pageTable tbody");
+
+            //Remove table content from html
+            while (table.firstChild) {
+                table.removeChild(table.lastChild);
+            }
+
+            for (let page of response) 
+            {
+                if (page.html == htmlName)
+                {
+                    // Request to corresponding JSON for table content
+                    createJsonRequest("GET", page.tableContent, (err, tableRows) => 
+                    {
+                        let tableContent = JSON.stringify(tableRows);
+                        const replaceWith = new RegExp(`${buttonId}`, "g") // replace original key with buttonId
+                        tableContent = JSON.parse(tableContent.replace(replaceWith, "buttonId"));
+                        tableColumns = JSON.parse(JSON.stringify(tableColumns).replace(replaceWith, "buttonId"));
+    
+                        if (dataType == "string" || dataType == "link" || dataType == "date") {
+                            tableContent.sort( (a, b) => {
+                                return a.buttonId > b.buttonId ? 1 : -1;
+                            });    
+                        }
+                        else if (dataType == "number") {
+                            tableContent.sort( (a, b) => {
+                                return a.buttonId - b.buttonId;
+                            });    
+                        }
+    
+                        // Construct table body again
+                        const result = getDataArrays(tableColumns);     
+                        const keys = result[0], types = result[1], texts = result[2];
+                        constructTableContent(tableContent, keys, types, texts);
+                    });
+                }
+            }
+        }  
     });
 }
 
@@ -110,32 +121,37 @@ var sort = (buttonId, dataType, tableColumns) => {
 // Table Header creation
 var tableHeader = (httpMethod, tableHeaderUrl) => {
     createJsonRequest(httpMethod, tableHeaderUrl, (err, response) => {
-        const table = document.querySelector("#pageTable thead");
-        const tableHeadRow = document.createElement("tr");
-
-        for(let column of response) {
-
-            const heading = document.createElement("th");
-            heading.innerText = column.name;
-            heading.style.backgroundColor = "#6aa1b2";
-
-            //sortable: true --> if true make a sort button, align text to center to match button
-            if (column.sortable) {
-                const button = document.createElement("button");
-                button.innerText = "Sort";
-
-                // to identify which button is clicked
-                button.setAttribute("id", column.key);
-                button.addEventListener('click', () => {
-                    sort(button.id, column.type, response);
-                });
-
-                heading.style.textAlign = "center";
-                heading.appendChild(button);
-            }
-            tableHeadRow.appendChild(heading);
+        if (err) {
+            alert("JSON loading pending"); 
         }
-        table.appendChild(tableHeadRow);
+        else {
+            const table = document.querySelector("#pageTable thead");
+            const tableHeadRow = document.createElement("tr");
+
+            for(let column of response) {
+
+                const heading = document.createElement("th");
+                heading.innerText = column.name;
+                heading.style.backgroundColor = "#6aa1b2";
+
+                //sortable: true --> if true make a sort button, align text to center to match button
+                if (column.sortable) {
+                    const button = document.createElement("button");
+                    button.innerText = "Sort";
+
+                    // to identify which button is clicked
+                    button.setAttribute("id", column.key);
+                    button.addEventListener('click', () => {
+                        sort(button.id, column.type, response);
+                    });
+
+                    heading.style.textAlign = "center";
+                    heading.appendChild(button);
+                }
+                tableHeadRow.appendChild(heading);
+            }
+            table.appendChild(tableHeadRow);
+        }
     });
 }
 
@@ -143,13 +159,48 @@ export {tableHeader};
 
 /*.................................................................................................................*/
 
+var displayAlert = (id, button) => {
+
+    // disable other actions
+    const buttons = document.getElementsByTagName("button");
+    for (let button of buttons) {
+        button.disabled = true;
+    }
+
+    const alertBody = document.getElementById("alert");
+    alertBody.style.display = "block";
+    
+    const closeButton = document.createElement("span");
+    closeButton.setAttribute("id", id);
+    closeButton.innerText = "x";
+
+    closeButton.addEventListener('click', () => {
+        while (alertBody.firstChild) {
+            alertBody.removeChild(alertBody.lastChild);
+        }
+        alertBody.style.display = "none";
+
+        for (let button of buttons) {
+            button.disabled = false;
+        }
+        
+    });
+    alertBody.appendChild(closeButton);
+
+    const alertText = document.createElement("p");
+    alertText.innerText = "Alert for Button Click";
+    alertBody.appendChild(alertText);
+}
+
+/*.................................................................................................................*/
 var constructTableContent = (tableRows, keys, types, texts) => {
     const table = document.querySelector("#pageTable tbody");
-    for(let column of tableRows) {
+    for(let column of tableRows) 
+    {
         const tableHeadRow = document.createElement("tr");
 
-        for (let key in column) {
-            
+        for (let key in column) 
+        {
             const tableData = document.createElement("td");
             const dataIndex = keys.indexOf(key);
 
@@ -170,8 +221,11 @@ var constructTableContent = (tableRows, keys, types, texts) => {
                 tableData.appendChild(link);
             }
 
-            const isAvailable = (button, availability) => {
+            const isAvailable = (button, availability, id) => {
                 if (availability) {
+                    button.addEventListener('click', ()=> {
+                        displayAlert(id);
+                    });
                     tableData.appendChild(button);
                 }
                 else {
@@ -205,7 +259,7 @@ var constructTableContent = (tableRows, keys, types, texts) => {
                 else if (types[dataIndex] == "button") {
                     const button = document.createElement("button");
                     button.innerText = texts[dataIndex];
-                    isAvailable(button, column[key]);
+                    isAvailable(button, column[key], keys[dataIndex]);
                 }
             }
             tableHeadRow.appendChild(tableData);                   
@@ -220,11 +274,16 @@ var constructTableContent = (tableRows, keys, types, texts) => {
 var tableContent = (httpMethod, tableHeaderUrl, tableContentUrl) => {
 
     createJsonRequest(httpMethod, tableHeaderUrl, function(err, tableColumns) {
-        const result = getDataArrays(tableColumns);     
-        const keys = result[0], types = result[1], texts = result[2];
-        createJsonRequest(httpMethod, tableContentUrl, (err, tableRows) => {
-            constructTableContent(tableRows, keys, types, texts);
-        });
+        if (err) {
+            alert("JSON Loading Pending!");
+        }
+        else {
+            const result = getDataArrays(tableColumns);   
+            const keys = result[0], types = result[1], texts = result[2];
+            createJsonRequest(httpMethod, tableContentUrl, (err, tableRows) => {
+                constructTableContent(tableRows, keys, types, texts);
+            });
+        }
     });
 }
 export {tableContent};
