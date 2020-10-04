@@ -88,7 +88,6 @@ main .content {
     background-color: #f1f1f1;
     color: #000000;
     width: 100%;
-    height: calc(100vh - 120px);
     float: left;
     padding:0;
     margin:0 auto;
@@ -149,7 +148,6 @@ a {
     float: left;
     font-size: 14px;
     padding: 20px;
-    height: calc(100vh - 209px);
     padding: 20px 0px 0 0px;
 }
 
@@ -213,9 +211,7 @@ footer {
     float: left;
     display: block;
     font-size: 13px;
-    position: fixed;
-    left: 0;
-    bottom: 0;
+    position: sticky;
 }
 
 footer ul {
@@ -225,7 +221,7 @@ footer ul {
 footer ul li {
     width: 25%;
     float: left;
-    padding: 20px;
+    padding: 25px;
 }
 
 footer .container {

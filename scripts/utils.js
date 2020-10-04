@@ -10,9 +10,7 @@ var createJsonRequest = (httpMethod, url, callback) => {
         }  
     }; 
 
-    xhr.onerror = function() {
-        callback(this.response, null);
-    };
+    xhr.onerror = function() { callback(this.response, null); };
 
     xhr.send();
 }
@@ -63,7 +61,6 @@ var getDataArrays = (tableColumns) => {
 
 var sort = (buttonId, dataType, tableColumns) => {
 
-    // Which html is calling?
     const htmlName = window.location.href.split("/").pop(); // Get file name
     if (!htmlName) {
         window.location.href = "http://127.0.0.1:5500/index.html"; // manual redirection due to lack of indexing
@@ -104,10 +101,9 @@ var sort = (buttonId, dataType, tableColumns) => {
                                 return a.buttonId - b.buttonId;
                             });    
                         }
-    
+
                         // Construct table body again
-                        const result = getDataArrays(tableColumns);     
-                        const keys = result[0], types = result[1], texts = result[2];
+                        const result = getDataArrays(tableColumns), keys = result[0], types = result[1], texts = result[2];
                         constructTableContent(tableContent, keys, types, texts);
                     });
                 }

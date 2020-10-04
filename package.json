@@ -1,0 +1,20 @@
+{
+  "name": "assignment-2",
+  "version": "1.0.0",
+  "description": "Javascript Website",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JiHaripriya/JavaScript-Works.git"
+  },
+  "author": "J. Haripriya",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JiHaripriya/JavaScript-Works/issues"
+  },
+  "homepage": "https://github.com/JiHaripriya/JavaScript-Works#readme"
+}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="css/loginForms.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>
+                <a href=""><img src="images/logo.jpg" alt="RMedia Logo"></a>
+                <input type="search" name="search" id="search" placeholder="Search...">
+            </h1>
+            <div id="alert"><!--Dynamic Alert--></div>
+        </div>  
+    </header>
+    <main>
+        <form action="" id="myForm" style="max-width: 500px;margin-top: 5%;">
+            <h2 class="remove-padding padBottom-10">Login</h2>
+            <hr class="remove-padding">
+
+            <div id="formContent">
+                <div class="wrap padTop-20">
+                    <label for="firstName" class="column-align "><b class="padBottom-10">First Name</b>
+                        <input type="text" placeholder="First Name" name="firstName" id="firstName" required maxlength="25" minlength="3" pattern="[A-Za-z\sA-Za-z]{0,25}">
+                        <p id="fname"></p>
+                    </label>
+                    
+                    <label for="lastName" class="column-align"><b class="padBottom-10">Last Name</b>
+                        <input type="text" placeholder="Last Name" name="lastName" id="lastName" required maxlength="25" minlength="8" pattern="[A-Za-z\sA-Za-z]{0,25}">
+                        <p id="lname"></p>
+                    </label>
+                </div>
+
+                <div class="padBottom-10 padTop-10">
+                    <label for="password" class="column-align"><b class="padBottom-10">Password</b>
+                        <input type="password" placeholder="" name="password" id="password" minlength="8" required>
+                    </label>
+                </div>
+
+                <div class="wrap padTop-20">
+                    <a href="http://127.0.0.1:5500/register.html" class="column-align">Create Account</a>
+                    <button type="submit" class="registerBtn">Login</button>
+                </div>
+                
+            </div>
+        </form>
+    </main>
+
+    <script type="module" src="scripts/utils.js"></script>
+    <script src="scripts/login.js"></script>
+</body>
+</html>
