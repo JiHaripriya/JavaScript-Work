@@ -1,13 +1,9 @@
-
-//ihavetogoA1
 const displayTimedMessage = (htmlElement, message, color) => {
     htmlElement.innerText = message;
     htmlElement.style.color = color;
 }
 
-const hideTimedMessage = (htmlElement) => {
-    setTimeout(() => { htmlElement.innerText = "";}, 3500); 
-}
+const hideTimedMessage = (htmlElement) => setTimeout(() => { htmlElement.innerText = "";}, 3500); 
 
 const emptyValueCheck = (htmlElement, value) => {
     if (value.length === 0 || value == "") {
@@ -20,34 +16,43 @@ const emptyValueCheck = (htmlElement, value) => {
     }
 }
 
-const firstName = document.getElementById("firstName"), lastName = document.getElementById("lastName"),
-nameMessageArea = document.getElementById("nameMsg"), password = document.getElementById("password"), passwordAreaMsg = document.getElementById("passwordAreaMsg");
+const newUserLoginData = (users) => {
+    try {
+        for(let user of users) {
+            if((user.email === email.value) && (user.password ===  password.value)) {
+                localStorage.setItem("currentuser", JSON.stringify(user));
+                location.href = "index.html";
+            }
+            else displayTimedMessage(passwordAreaMsg, "Email id and password doesnot match", "red"); 
+        }
+    } // Only one user present
+    catch (err) {
+        if((users.email === email.value) && (users.password ===  password.value)) {
+            localStorage.setItem("currentuser", JSON.stringify(users));
+            location.href = "index.html";
+        }
+        else displayTimedMessage(passwordAreaMsg, "Email id and password doesnot match", "red"); 
+    } 
+}
 
-firstName.addEventListener("keyup", () => { emptyValueCheck(nameMessageArea, firstName.value); } );
-firstName.addEventListener("mouseout", () => { emptyValueCheck(nameMessageArea, firstName.value); } );
+const email = document.getElementById("email"), 
+emailMessageArea = document.getElementById("emailMsg"), password = document.getElementById("password"), 
+passwordAreaMsg = document.getElementById("passwordAreaMsg");
 
-lastName.addEventListener("keyup", () => { emptyValueCheck(nameMessageArea, lastName.value); } );
-lastName.addEventListener("mouseout", () => { emptyValueCheck(nameMessageArea, lastName.value); } );
+email.addEventListener("keyup", () =>  emptyValueCheck(emailMessageArea, email.value));
+email.addEventListener("mouseout", () =>  emptyValueCheck(emailMessageArea, email.value));
 
-password.addEventListener("keyup", () => { emptyValueCheck(passwordAreaMsg, password.value); } );
-password.addEventListener("mouseout", () => { emptyValueCheck(passwordAreaMsg, password.value); } );
+password.addEventListener("keyup", () =>  emptyValueCheck(passwordAreaMsg, password.value));
+password.addEventListener("mouseout", () =>  emptyValueCheck(passwordAreaMsg, password.value));
 
 // Allow Registered User access
 const loginButton = document.getElementById("loginButton");
 loginButton.addEventListener('click', (e) => {
     e.preventDefault();
-    if ((emptyValueCheck(nameMessageArea, firstName.value)) && (emptyValueCheck(nameMessageArea, lastName.value)) && (emptyValueCheck(passwordAreaMsg, password.value))) 
+    if ((emptyValueCheck(emailMessageArea, email.value)) && (emptyValueCheck(passwordAreaMsg, password.value))) 
     {
         const users = JSON.parse(localStorage.getItem('users'));
-        for(let user of users) {
-            if((user.firstName === firstName.value) && (user.lastName === lastName.value) && (user.password ===  password.value)){
-                localStorage.setItem("currentuser", JSON.stringify(user));
-                location.href = "index.html";
-            }
-            else { displayTimedMessage(passwordAreaMsg, "Username and password doesnot match", "red"); }
-        }
+        newUserLoginData(users);
     }
-    else { displayTimedMessage(passwordAreaMsg, "One or more fields empty.", "red"); }
+    else displayTimedMessage(passwordAreaMsg, "One or more fields empty.", "red"); 
 });
-
-console.log(localStorage.getItem("currentuser"));

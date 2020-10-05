@@ -62,9 +62,6 @@ var getDataArrays = (tableColumns) => {
 var sort = (buttonId, dataType, tableColumns) => {
 
     const htmlName = window.location.href.split("/").pop(); // Get file name
-    if (!htmlName) {
-        window.location.href = "http://127.0.0.1:5500/index.html"; // manual redirection due to lack of indexing
-    }
 
     // Load json from mapping file
     createJsonRequest("GET", "http://127.0.0.1:5500/config/htmlJsonFileMapping.json", (err, response) => {
@@ -137,7 +134,7 @@ var tableHeader = (httpMethod, tableHeaderUrl) => {
 
                     // to identify which button is clicked
                     button.setAttribute("id", column.key);
-                    button.addEventListener('click', () => {
+                    button.addEventListener ('click', () => {
                         sort(button.id, column.type, response);
                     });
 
@@ -189,6 +186,7 @@ var displayAlert = (id, button) => {
 }
 
 /*.................................................................................................................*/
+
 var constructTableContent = (tableRows, keys, types, texts) => {
     const table = document.querySelector("#pageTable tbody");
     for(let column of tableRows) 

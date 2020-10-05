@@ -19,19 +19,16 @@
     </header>
     <main>
         <form action="" id="myForm" style="max-width: 500px;margin-top: 5%;">
-            <h2 class="remove-padding padBottom-10">Registration</h2>
+            <h2 class="remove-padding padBottom-10">Login</h2>
             <hr class="remove-padding">
 
             <div id="formContent">
-                <div class="wrap padTop-20 padBottom-10">
-                    <label for="firstName" class="column-align "><b class="padBottom-10">First Name</b>
-                        <input type="text" placeholder="First Name" name="firstName" id="firstName" required maxlength="25" minlength="3" pattern="[A-Za-z\sA-Za-z]{0,25}">
-                    </label>
-                    <label for="lastName" class="column-align"><b class="padBottom-10">Last Name</b>
-                        <input type="text" placeholder="Last Name" name="lastName" id="lastName" required maxlength="25" minlength="8" pattern="[A-Za-z\sA-Za-z]{0,25}">
+                <div class=" padTop-20 padBottom-10">
+                    <label for="email" class="column-align "><b class="padBottom-10">Email</b>
+                        <input type="email" placeholder="Registered Email" name="email" id="email" required>
                     </label>
                 </div>
-                <p id="nameMsg" class="padTop-10"></p>
+                <p id="emailMsg" class="padTop-10"></p>
 
                 <div class="wrap" id="passwordArea">
                     <label for="password" ><b>Password</b>

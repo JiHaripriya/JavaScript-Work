@@ -33,12 +33,19 @@
                 </div>
                 <p id="nameMsg" class="padTop-10"></p>
 
-                <div class="dob">
+                <div class="dob wrap">
                     <label for="dob" class="column-align "><b class="padBottom-10">Date of Birth</b>
-                        <input type="date" value="1998-09-26" name="dob" id="dob"  required>
+                        <input type="date" name="dob" id="dob"  required>
+                    </label>
+
+                    <label for="email" class="column-align "><b class="padBottom-10">Email</b>
+                        <input type="email" placeholder="me@example.com" name="email" id="email" required>
                     </label>
                 </div>
-                <p id="dobMsg" class="padTop-10"></p>
+                <div class="wrap">
+                    <p id="dobMsg" class="padTop-10 column-align "></p>
+                    <p id="emailMsg" class="padTop-10 column-align "></p>
+                </div>
                 
                 <div class="wrap padTop-10 padBottom-10">
                     <label for="phone" class="column-align padBottom-10"><b class="padBottom-10">Phone Number</b>
@@ -82,8 +89,8 @@
                 
                 <hr>
                 <div class="wrap terms-conditions padTop-20 ">
-                    <input type="checkbox" name="checkbox" value="check" id="agree" checked>
-                    <span class="terms-conditions__span">I have read and agree to the Terms and Conditions and Privacy Policy</span>
+                    <input type="checkbox" name="checkbox" value="check" id="agree">
+                    <span class="terms-conditions__span">I have read and agreed to the Terms and Conditions and Privacy Policy</span>
                 </div>
                 <p id="termsMessage" class="column-align-msg padTop-10"></p>
 
@@ -97,7 +104,7 @@
     </main>
 
     <script type="module" src="scripts/utils.js"></script>
-    <script src="scripts/register.js"></script>
+    <script type="module" src="scripts/register.js"></script>
     
 </body>
 </html>

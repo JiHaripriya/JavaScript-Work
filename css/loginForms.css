@@ -2,7 +2,7 @@ main {
     left: 0;
     right: 0;
     position: absolute;
-    margin: 10% 0 0 0;
+    margin: 140px 0 0 0;
     padding: 0;
 }
 
@@ -33,6 +33,7 @@ main {
 #myForm input[type="date"],
 #myForm input[type="tel"],
 #myForm input[type="button"],
+#myForm input[type="email"],
 select {
     height: 30px;
 }
