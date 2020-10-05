@@ -105,6 +105,10 @@ main .content {
     background-color: #95E1F9;
 }
 
+#logout {
+    padding: 10px 0 0 0;
+    float: right;
+}
 mark {
     font-weight: bold;
     background-color: #f1f1f1;

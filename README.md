@@ -22,3 +22,6 @@ Project Setup:
 2. Latest Posts: Loads latest posts from latestPosts.json to required pages
 3. Dynamic Table: Generates table data with table header from config folder and table data from apis
 4. Sort Dynamic Table: Table content is sorted on button click
+5. Logout functionality
+6. Registration and login form validations
+7. Indexed pages

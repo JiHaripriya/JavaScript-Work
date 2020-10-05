@@ -1,4 +1,3 @@
-
 const displayTimedMessage = (htmlElement, message, color) => {
     htmlElement.innerText = message;
     htmlElement.style.color = color;
@@ -118,46 +117,38 @@ const passwordValueCheck = (password, confirmPassword) => {
     }
 }
 
-passwordArea.addEventListener('keyup', () => {
-    passwordValueCheck(password, confirmPassword);
-});
+passwordArea.addEventListener('keyup', () => { passwordValueCheck(password, confirmPassword); });
 
 /* ................................... Terms and Condition ........................... */
 
 const checkStatus = document.getElementById("agree"), agreeTextMsg = document.getElementById("termsMessage");
 
 const statusMessage = (checkStatus, agreeTextMsg) => {
-    if(!checkStatus) { 
-        displayTimedMessage(agreeTextMsg, "Kindly accept our Terms and Conditions", "red");
-    }
-    else {
-        agreeTextMsg.innerText = "";
-    }
+    if(!checkStatus) { displayTimedMessage(agreeTextMsg, "Kindly accept our Terms and Conditions", "red"); }
+    else { agreeTextMsg.innerText = ""; }
 }
 
-checkStatus.addEventListener("click", () => {
-    statusMessage(checkStatus.checked, agreeTextMsg);
-});
+checkStatus.addEventListener("click", () => { statusMessage(checkStatus.checked, agreeTextMsg); });
 
 /*********************................. FORM SUBMISSION .................*********************/
 
 const registerButton = document.getElementById("registerButton");
-
+ 
 const storeObjects = function(key, value) {
     if (localStorage.getItem(key)) {
-        let previousValues = JSON.parse(localStorage.getItem(key));
-        previousValues.append(JSON.stringify(value));
-        localStorage.setItem(key, JSON.stringify(previousValues));
+        let previousUsers = [];
+        previousUsers.push(JSON.parse(localStorage.getItem(key)));
+        previousUsers.push(value); //new value
+        localStorage.setItem(key, JSON.stringify(previousUsers));
     }
-    else {
-        localStorage.setItem(key, JSON.stringify(value));
-    }
+    else { localStorage.setItem(key, JSON.stringify(value)); } // first value
 }
 
 registerButton.addEventListener('click', (e) => {
     e.preventDefault();
+    
     if ((nameCheck(firstName.value)) && (nameCheck(lastName.value)) && (getAge(calenderInput.value) >= 18) && (numberPatternCheck(countryCode.value, phoneNumber.value)) && (passwordValueCheck(password, confirmPassword)) && (checkStatus.checked)) {
-        let registeredUser = {
+        const registeredUser = {
             "firstName": firstName.value,
             "lastName": lastName.value,
             "age": calenderInput.value,
@@ -166,8 +157,34 @@ registerButton.addEventListener('click', (e) => {
             "password": password.value,
             "agree": checkStatus.checked
         };
-        storeObjects("users", registeredUser);
-        location.href = "login.html";
+        const users = JSON.parse(localStorage.getItem('users'));
+        console.log(users);
+        if (users === null) {
+            storeObjects("users", registeredUser);
+            location.href = "login.html";
+        }
+        else {
+            try {
+                for(let user of users) {
+                    if((user.firstName === firstName.value) && (user.lastName === lastName.value) || (user.password ===  password.value)) {
+                        displayTimedMessage(termsMessage, "Already Registered.", "red"); 
+                    }
+                    else { 
+                        storeObjects("users", registeredUser);
+                        location.href = "login.html";
+                    }
+                }
+            } // Single user
+            catch (err) {
+                if((users.firstName === firstName.value) && (users.lastName === lastName.value) || (users.password ===  password.value)) {
+                    displayTimedMessage(termsMessage, "Already Registered.", "red"); 
+                }
+                else { 
+                    storeObjects("users", registeredUser);
+                    location.href = "login.html";
+                }
+            } 
+        }
     }
     else {
         if( !( (nameCheck(firstName.value)) && (nameCheck(lastName.value)) ) ) { nameCheckEvents(nameMessageArea, firstName.value); }

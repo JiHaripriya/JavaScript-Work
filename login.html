@@ -19,31 +19,34 @@
     </header>
     <main>
         <form action="" id="myForm" style="max-width: 500px;margin-top: 5%;">
-            <h2 class="remove-padding padBottom-10">Login</h2>
+            <h2 class="remove-padding padBottom-10">Registration</h2>
             <hr class="remove-padding">
 
             <div id="formContent">
-                <div class="wrap padTop-20">
+                <div class="wrap padTop-20 padBottom-10">
                     <label for="firstName" class="column-align "><b class="padBottom-10">First Name</b>
                         <input type="text" placeholder="First Name" name="firstName" id="firstName" required maxlength="25" minlength="3" pattern="[A-Za-z\sA-Za-z]{0,25}">
-                        <p id="fname"></p>
                     </label>
-                    
                     <label for="lastName" class="column-align"><b class="padBottom-10">Last Name</b>
                         <input type="text" placeholder="Last Name" name="lastName" id="lastName" required maxlength="25" minlength="8" pattern="[A-Za-z\sA-Za-z]{0,25}">
-                        <p id="lname"></p>
                     </label>
                 </div>
+                <p id="nameMsg" class="padTop-10"></p>
 
-                <div class="padBottom-10 padTop-10">
-                    <label for="password" class="column-align"><b class="padBottom-10">Password</b>
-                        <input type="password" placeholder="" name="password" id="password" minlength="8" required>
+                <div class="wrap" id="passwordArea">
+                    <label for="password" ><b>Password</b>
+                        <div class="wrap wrap-password">
+                            <input style="width: 85%;" type="password" placeholder="" name="password" id="password" minlength="8" required >
+                            <img style="height: 50px;" src="images/eye.svg" alt="Eye" class="eye" id="openEye1">
+                        </div>
                     </label>
                 </div>
-
-                <div class="wrap padTop-20">
-                    <a href="http://127.0.0.1:5500/register.html" class="column-align">Create Account</a>
-                    <button type="submit" class="registerBtn">Login</button>
+                <p id="passwordAreaMsg" class="column-align-msg"></p>
+                
+                <hr>
+                <div class="wrap padTop-10">
+                    <a href="http://127.0.0.1:5500/register.html" >New User?</a>
+                    <button type="submit" class="registerBtn" id="loginButton">Sign in</button>
                 </div>
                 
             </div>
