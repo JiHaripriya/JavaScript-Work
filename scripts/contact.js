@@ -69,3 +69,5 @@ formButton.addEventListener('click', () => {
 // Retrieve the object from storage
 var retrievedObject = localStorage.getItem('payLoad');
 console.log('Pay Load: ', JSON.parse(retrievedObject));
+
+console.log(location.href)
