@@ -189,8 +189,8 @@ var constructTableContent = (tableRows, keys, types, texts) => {
         for (let key in column) 
         {
             const tableData = document.createElement("td"), dataIndex = keys.indexOf(key),
-            dataType = types[dataIndex], value = column[key], innerText = innerText,
-            column = keys[dataIndex];
+            dataType = types[dataIndex], value = column[key], innerText = texts[dataIndex],
+            columnName = keys[dataIndex];
 
             switch(dataType) 
             {
@@ -209,7 +209,7 @@ var constructTableContent = (tableRows, keys, types, texts) => {
 
                 case "button":  const button = document.createElement("button");
                                 button.innerText = texts[dataIndex];
-                                isPositionAvailable(button, value, column, tableData); 
+                                isPositionAvailable(button, value, columnName, tableData); 
                                 break;
             }
             tableHeadRow.appendChild(tableData);                   
