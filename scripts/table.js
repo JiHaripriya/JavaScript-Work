@@ -188,27 +188,28 @@ var constructTableContent = (tableRows, keys, types, texts) => {
         // Looping through each column value of a row
         for (let key in column) 
         {
-            const tableData = document.createElement("td");
-            const dataIndex = keys.indexOf(key);
+            const tableData = document.createElement("td"), dataIndex = keys.indexOf(key),
+            dataType = types[dataIndex], value = column[key], innerText = innerText,
+            column = keys[dataIndex];
 
-            switch(types[dataIndex]) 
+            switch(dataType) 
             {
-                case "string":  isValid(column[key], tableData);
+                case "string":  isValid(value, tableData);
                                 break;
 
                 case "link":    const link = document.createElement("a");
-                                isLink(link, column[key], texts[dataIndex], tableData);
+                                isLink(link, value, innerText, tableData);
                                 break;
 
-                case "number":  isNumberOrDate(column[key], tableData);
+                case "number":  isNumberOrDate(value, tableData);
                                 break;
 
-                case "date":    isNumberOrDate(column[key], tableData);
+                case "date":    isNumberOrDate(value, tableData);
                                 break;
 
                 case "button":  const button = document.createElement("button");
                                 button.innerText = texts[dataIndex];
-                                isPositionAvailable(button, column[key], keys[dataIndex], tableData); 
+                                isPositionAvailable(button, value, column, tableData); 
                                 break;
             }
             tableHeadRow.appendChild(tableData);                   
