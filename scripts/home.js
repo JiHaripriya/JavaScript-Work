@@ -1,5 +1,6 @@
-import createJsonRequest, { tableContent } from "./utils.js";
-import {tableHeader} from "./utils.js";
+import createJsonRequest from "./utils.js";
+import {tableHeader, tableContent } from "./table.js";
+const urll = "http://127.0.0.1:5500/config/htmlJsonFileMapping.json";
 
 let method = 'GET', url = "http://127.0.0.1:5500/apis/home.json";
 
