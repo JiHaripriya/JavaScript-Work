@@ -117,7 +117,7 @@ export {tableHeader};
 
 var displayAlert = (id) => {
 
-    // disables other button actions
+    // Disables other button actions
     const buttons = document.getElementsByTagName("button");
     for (let button of buttons) { button.disabled = true; }
 
@@ -142,7 +142,8 @@ var displayAlert = (id) => {
     alertBody.appendChild(alertText);
 }
 
-// Checks for received input value
+// Checks for received input value: '-' indicates null value
+
 const isValid = (value, tableData) => {
     tableData.style.textAlign = "left";
     tableData.innerText = value != "-" ? value: "-";
@@ -179,15 +180,17 @@ const isPositionAvailable = (button, availability, id, tableData) => {
 
 var constructTableContent = (tableRows, keys, types, texts) => {
     const table = document.querySelector("#pageTable tbody");
+    // Loops through each row of table content
     for(let column of tableRows) 
     {
         const tableHeadRow = document.createElement("tr");
+
+        // Looping through each column value of a row
         for (let key in column) 
         {
             const tableData = document.createElement("td");
             const dataIndex = keys.indexOf(key);
 
-            // Valid column check
             switch(types[dataIndex]) 
             {
                 case "string":  isValid(column[key], tableData);
