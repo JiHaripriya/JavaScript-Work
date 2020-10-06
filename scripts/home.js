@@ -1,15 +1,14 @@
 import createJsonRequest from "./utils.js";
 import {tableHeader, tableContent } from "./table.js";
-const urll = "http://127.0.0.1:5500/config/htmlJsonFileMapping.json";
+import {configFileBaseUrl, apiFileBaseUrl} from "./config.js";
 
-let method = 'GET', url = "http://127.0.0.1:5500/apis/home.json";
+let method = 'GET', url = `${apiFileBaseUrl}home.json`,
+mappingUrl = `${configFileBaseUrl}htmlJsonFileMapping.json`;
 
 // Dynamic Home Page Data
 createJsonRequest( method, url, function( err, response ) {
 
-    if(err) { 
-        console.log("Error occured while processing JSON!"); 
-    }
+    if(err) alert("Error occured while processing JSON!"); 
     else {
 
         const parentDivElement = document.querySelector(".text-wrap");
@@ -26,24 +25,17 @@ createJsonRequest( method, url, function( err, response ) {
         image.setAttribute('class', "img-wrap");
         heading.appendChild(image);
 
-        /* ==================================================================================================== */
-
         /* Content in home */
         const mainContent = document.createElement('p');
         const contentText = response.contentParagraph;
         mainContent.innerText = contentText.slice(0, response.textVisibleLength);
         parentDivElement.appendChild(mainContent);
 
-        /*
-            Element to create ~
-            <!--Add button: Read More-->
-            <button id="read">Read More</button>
-        */
+        // Read more button
         const buttonReadMore = document.createElement('button');
         buttonReadMore.setAttribute("id", "read");
         buttonReadMore.innerText = "Read More";
 
-        // Flag action
         const readMoreContent = document.createElement('p');
         readMoreContent.style.display = "none";
 
@@ -73,13 +65,12 @@ createJsonRequest( method, url, function( err, response ) {
     }
 });
 
-
-
-const tableHeaderUrl = "http://127.0.0.1:5500/config/tableHome_Header.json",
-tableContentUrl = "http://127.0.0.1:5500/apis/tableHome.json";
-
-tableHeader(method, tableHeaderUrl);
-tableContent(method, tableHeaderUrl, tableContentUrl);
-
-
-
+const htmlName = location.href.split("/").pop(); // Get file name
+createJsonRequest(method, mappingUrl, (err, response) => {
+    for (let page of response){
+        if(page.html === htmlName) {
+            tableHeader(method, page.tableHeader);
+            tableContent(method, page.tableHeader, page.tableContent);
+        }
+    }
+});

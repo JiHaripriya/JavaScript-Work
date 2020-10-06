@@ -1,10 +1,13 @@
+/*............................................................... 
+                    REUSABLE CSS PROPERTIES 
+.................................................................*/
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body{
+body {
     margin: 0;
     font-family: arial, helvetica, sans-serif;
     position: relative;
@@ -22,6 +25,9 @@ p {
     margin-bottom: 15px;
 }
 
+/*............................................................... 
+                    HEADER SECTION 
+.................................................................*/
 #alert {
     height: 100px;
     float: left;
@@ -83,6 +89,9 @@ header {
     margin: 15px 34px 0 0;
 }
 
+/*............................................................... 
+                    MAIN SECTION 
+.................................................................*/
 main .content {
     position: relative;
     background-color: #f1f1f1;
@@ -183,6 +192,9 @@ a {
     padding-top: 3px;
 }
 
+/*............................................................... 
+                    TABLE SECTION 
+.................................................................*/
 table {
     border-collapse: collapse;
     text-align: left;
@@ -228,6 +240,9 @@ table select:focus {
     outline: none;
 }
 
+/*............................................................... 
+                    FOOTER SECTION 
+.................................................................*/
 footer {
     background-color: #c7c7c7;
     width: 100%;

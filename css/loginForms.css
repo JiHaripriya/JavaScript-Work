@@ -6,9 +6,7 @@ main {
     padding: 0;
 }
 
-.remove-padding {
-    padding: 0;
-}
+.remove-padding { padding: 0; }
 
 #myForm {
     max-width: 800px;
@@ -18,9 +16,7 @@ main {
     box-shadow: 1px 1px 10px #6aa1b2;
 }
 
-#myForm a {
-    font-size: 14px;
-}
+#myForm a { font-size: 14px; }
 
 #myForm a:hover{
     color: #6aa1b2;
@@ -46,18 +42,11 @@ select {
     outline: 2px solid #6aa1b2;
 }
 
-.padBottom-10 {
-    padding: 0px 0 10px 0;
-}
+.padBottom-10 { padding: 0px 0 10px 0; }
 
-.padTop-20 {
-    padding: 20px 0 0 0;
-}
+.padTop-20 { padding: 20px 0 0 0; }
 
-.padTop-10 {
-    padding: 10px 0 0 0;
-}
-
+.padTop-10 { padding: 10px 0 0 0; }
 
 .row-align {
     display: flex;
@@ -83,13 +72,9 @@ select {
     align-items: baseline;
 }
 
-.wrap-password {
-    align-items: center;
-}
+.wrap-password { align-items: center; }
 
-.width-85 {
-    width: 85%;
-}
+.width-85 { width: 85%; }
 
 .terms-conditions {
     justify-content: flex-start;
@@ -119,10 +104,4 @@ select {
 .eye {
     width: 15%;
     padding: 10px;
-}
-
-#closeEye {
-    height: 30px;
-    vertical-align: bottom;
-    display: none;
 }

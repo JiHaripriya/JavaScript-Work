@@ -30,7 +30,7 @@ firstName.addEventListener("mouseout", () => nameCheckEvents(nameMessageArea, fi
 lastName.addEventListener("keyup", () => nameCheckEvents(nameMessageArea, lastName.value));
 lastName.addEventListener("mouseout", () => nameCheckEvents(nameMessageArea, lastName.value));
 
-/*......................... Date of Birth Validation ......................... */
+/* ......................... Date of Birth Validation ......................... */
 
 // A year of 365.25 days (0.25 because of leap years) which has 3.15576e+10 milliseconds (365.25 * 24 * 60 * 60 * 1000).
 const getAge = (birthDate) => { return Math.floor((new Date() - new Date(birthDate).getTime()) / 3.15576e+10); }

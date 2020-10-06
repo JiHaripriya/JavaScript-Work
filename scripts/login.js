@@ -21,7 +21,7 @@ const newUserLoginData = (users) => {
         for(let user of users) {
             if((user.email === email.value) && (user.password ===  password.value)) {
                 localStorage.setItem("currentuser", JSON.stringify(user));
-                location.href = "index.html";
+                location.href = "home.html";
             }
             else displayTimedMessage(passwordAreaMsg, "Email id and password doesnot match", "red"); 
         }
@@ -29,7 +29,7 @@ const newUserLoginData = (users) => {
     catch (err) {
         if((users.email === email.value) && (users.password ===  password.value)) {
             localStorage.setItem("currentuser", JSON.stringify(users));
-            location.href = "index.html";
+            location.href = "home.html";
         }
         else displayTimedMessage(passwordAreaMsg, "Email id and password doesnot match", "red"); 
     } 

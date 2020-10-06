@@ -1,6 +1,9 @@
 import createJsonRequest from "./utils.js";
-const url = "http://127.0.0.1:5500/config/htmlJsonFileMapping.json";
+import {configFileBaseUrl} from "./config.js";
 
+const mappingUrl = `${configFileBaseUrl}htmlJsonFileMapping.json`;
+
+// Function to store column attributes
 var getTableColumnAttributes = (tableColumns) => {
     let keys = [], types = [],texts =[];
     for(let column of tableColumns) {
@@ -11,54 +14,51 @@ var getTableColumnAttributes = (tableColumns) => {
     return [keys, types, texts];
 }
 
-var sortTableContents= (buttonId, dataType, tableColumns, sortType) => {
-
-    const htmlName = window.location.href.split("/").pop(); // Get file name
-
+var sortTableContents = (columnName, dataType, tableColumns, sortType) => {
+    
     // Load json from mapping file
-    createJsonRequest("GET", url , (err, response) => {
-        if (err) {
-            alert("JSON loading pending");
-        }
+    const htmlName = window.location.href.split("/").pop();
+    createJsonRequest("GET", mappingUrl , (err, response) => {
+        if (err) alert("JSON loading pending");
         else {
             const table = document.querySelector("#pageTable tbody");
+            
             //Remove table content from html
             while (table.firstChild) {
                 table.removeChild(table.lastChild);
             }
-
-            for (let page of response) 
-            {
-                if (page.html == htmlName)
-                {
+            
+            for (let page of response) {
+                if (page.html == htmlName) {
+                    
                     // Request to corresponding JSON for table content
-                    createJsonRequest("GET", page.tableContent, (err, tableRows) => 
-                    {
+                    createJsonRequest("GET", page.tableContent, (err, tableRows) => {
                         let tableContent = JSON.stringify(tableRows);
-                        const replaceWith = new RegExp(`${buttonId}`, "g") // replace original key with buttonId
-                        tableContent = JSON.parse(tableContent.replace(replaceWith, "buttonId"));
-                        tableColumns = JSON.parse(JSON.stringify(tableColumns).replace(replaceWith, "buttonId"));
+                        const replaceWith = new RegExp(`${columnName}`, "g") // replace original key with columnName
+                        tableContent = JSON.parse(tableContent.replace(replaceWith, "columnName"));
+                        tableColumns = JSON.parse(JSON.stringify(tableColumns).replace(replaceWith, "columnName"));
                         
                         if (sortType === "ascending") {
                             if (dataType == "string" || dataType == "link" || dataType == "date") {
-                                tableContent.sort( (a, b) => {return a.buttonId > b.buttonId ? 1 : -1; });    
+                                tableContent.sort( (a, b) => {return a.columnName > b.columnName ? 1 : -1; });    
                             }
                             else if (dataType == "number") {
-                                tableContent.sort( (a, b) => { return a.buttonId - b.buttonId; });    
+                                tableContent.sort( (a, b) => { return a.columnName - b.columnName; });    
                             }
                         }
                         else if (sortType === "descending") {
                             if (dataType == "string" || dataType == "link" || dataType == "date") {
-                                tableContent.sort( (a, b) => {return b.buttonId > a.buttonId ? 1 : -1; });    
+                                tableContent.sort( (a, b) => {return b.columnName > a.columnName ? 1 : -1; });    
                             }
                             else if (dataType == "number") {
-                                tableContent.sort( (a, b) => { return b.buttonId - a.buttonId; });    
+                                tableContent.sort( (a, b) => { return b.columnName - a.columnName; });    
                             }
                         }
                         else window.location.reload(); // revert sorted changes
                         
                         // Construct table body with sorted JSON
-                        const result = getTableColumnAttributes(tableColumns), keys = result[0], types = result[1], texts = result[2];
+                        const result = getTableColumnAttributes(tableColumns), keys = result[0], 
+                        types = result[1], texts = result[2];
                         constructTableContent(tableContent, keys, types, texts);
                     });
                 }
@@ -66,7 +66,6 @@ var sortTableContents= (buttonId, dataType, tableColumns, sortType) => {
         }  
     });
 }
-
 
 const resetOtherSelectOptions = (id) => {
     const allSelectOptions = document.querySelectorAll("select");
@@ -82,14 +81,13 @@ const createSortDropDown = (id, dataType, heading, tableColumns) => {
         <option value="default" selected></option>
         <option value="ascending"> Ascending</option>
         <option value="descending"> Descending</option>
-        <option value="revert"> Reset</option>
     `;
 
     sortDropDown.addEventListener('change', () => {
         resetOtherSelectOptions(id);
         if (sortDropDown.value == "ascending") sortTableContents(id, dataType, tableColumns, "ascending");
         else if (sortDropDown.value == "descending") sortTableContents(id, dataType, tableColumns, "descending");
-        else sortTableContents(id, dataType, tableColumns, "revert");
+        else sortTableContents(id, dataType, tableColumns, "");
     });
     heading.appendChild(sortDropDown);
 }
@@ -116,7 +114,6 @@ var tableHeader = (httpMethod, tableHeaderUrl) => {
 }
 
 export {tableHeader};
-
 
 var displayAlert = (id) => {
 
@@ -191,32 +188,25 @@ var constructTableContent = (tableRows, keys, types, texts) => {
             const dataIndex = keys.indexOf(key);
 
             // Valid column check
-            if(keys.indexOf(key) != -1) {
+            switch(types[dataIndex]) 
+            {
+                case "string":  isValid(column[key], tableData);
+                                break;
 
-                switch(types[dataIndex]) {
-                    case "string":
-                        isValid(column[key], tableData);
-                        break;
+                case "link":    const link = document.createElement("a");
+                                isLink(link, column[key], texts[dataIndex], tableData);
+                                break;
 
-                    case "link":
-                        const link = document.createElement("a");
-                        isLink(link, column[key], texts[dataIndex], tableData);
-                        break;
+                case "number":  isNumberOrDate(column[key], tableData);
+                                break;
 
-                    case "number": 
-                        isNumberOrDate(column[key], tableData);
-                        break;
+                case "date":    isNumberOrDate(column[key], tableData);
+                                break;
 
-                    case "date": 
-                        isNumberOrDate(column[key], tableData);
-                        break;
-
-                    case "button":
-                        const button = document.createElement("button");
-                        button.innerText = texts[dataIndex];
-                        isPositionAvailable(button, column[key], keys[dataIndex], tableData); 
-                        break;
-                  }
+                case "button":  const button = document.createElement("button");
+                                button.innerText = texts[dataIndex];
+                                isPositionAvailable(button, column[key], keys[dataIndex], tableData); 
+                                break;
             }
             tableHeadRow.appendChild(tableData);                   
         }

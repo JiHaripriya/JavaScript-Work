@@ -1,4 +1,3 @@
- 
 /* Add padding to containers */
 #myForm {
     padding: 0 15%;
@@ -7,6 +6,7 @@
 #myForm h2 {
     padding: 0;
 }
+
 /* Full-width input fields */
 input[type=text], input[type=password], input[type=tel], textarea,
 input[type=email] {
@@ -44,6 +44,7 @@ hr {
 .form__reduceMargin {
     margin-bottom: 0;
 }
+
 .registerbtn:hover {
     opacity: 1;
 }

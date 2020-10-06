@@ -11,14 +11,12 @@ var createJsonRequest = (httpMethod, url, callback) => {
     }; 
 
     xhr.onerror = function() { callback(this.response, null); };
-
     xhr.send();
 }
 
 export default createJsonRequest;
 
-/*.................................................................................................................*/
-
+// Search Functionality
 const searchBar = document.getElementById("search");
 
 searchBar.addEventListener(('click'), () => {
@@ -44,6 +42,3 @@ searchBar.addEventListener('keyup', (event) => {
         document.querySelector("main").innerHTML = mainContent.replace(removeMatch, "");
     }
 });
-
-/*.................................................................................................................*/
-
