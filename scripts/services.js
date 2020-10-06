@@ -1,6 +1,5 @@
 import createJsonRequest from "./utils.js";
-import {tableHeader} from "./utils.js";
-import {tableContent} from "./utils.js";
+import {tableHeader, tableContent } from "./table.js";
 
 var method = 'GET',
 url = "http://127.0.0.1:5500/apis/menu.json";

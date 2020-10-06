@@ -191,10 +191,16 @@ table {
     margin: 50px 0 0 0px;
 }
 
+thead th, td {
+    border: 2px solid white;
+    padding: 4px 0 4px 0;
+}
+
 th, td {
     border: 2px solid white;
     padding: 4px 0 4px 6px;
 }
+
 
 thead tr {
     background-color: #6aa1b2;
@@ -205,6 +211,19 @@ table button {
     margin: auto;
     background-color: #ffffff;
     padding: 0 5px;
+}
+
+table select {
+    padding: 10px 0 0 0;
+    width: 100%;
+    border: none;
+    background-color: #6aa1b2;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+table select:focus {
+    outline: none;
 }
 
 footer {
