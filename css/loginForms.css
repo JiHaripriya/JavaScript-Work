@@ -1,0 +1,107 @@
+main {
+    left: 0;
+    right: 0;
+    position: absolute;
+    margin: 140px 0 0 0;
+    padding: 0;
+}
+
+.remove-padding { padding: 0; }
+
+#myForm {
+    max-width: 800px;
+    margin: 0 auto;
+    outline: 1px solid  #6aa1b2;
+    padding: 25px;
+    box-shadow: 1px 1px 10px #6aa1b2;
+}
+
+#myForm a { font-size: 14px; }
+
+#myForm a:hover{
+    color: #6aa1b2;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+#myForm input[type="text"],
+#myForm input[type="password"],
+#myForm input[type="date"],
+#myForm input[type="tel"],
+#myForm input[type="button"],
+#myForm input[type="email"],
+select {
+    height: 30px;
+}
+
+#myForm input[type="text"]:focus,
+#myForm input[type="password"]:focus,
+#myForm input[type="date"]:focus,
+#myForm input[type="tel"]:focus {
+    border: none;
+    outline: 2px solid #6aa1b2;
+}
+
+.padBottom-10 { padding: 0px 0 10px 0; }
+
+.padTop-20 { padding: 20px 0 0 0; }
+
+.padTop-10 { padding: 10px 0 0 0; }
+
+.row-align {
+    display: flex;
+    flex-direction: row;
+}
+
+.column-align {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 47%;
+}
+
+.column-align-msg {
+    display: flex;
+    flex-direction: column;
+}
+
+.wrap {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.wrap-password { align-items: center; }
+
+.width-85 { width: 85%; }
+
+.terms-conditions {
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.terms-conditions__span {
+    padding: 0 0 0 10px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.registerBtn {
+    padding: 5px 30px;
+    background-color: #ffffff;
+    border: none;
+    outline: 1px solid #6aa1b2;
+    font-weight: bold;
+}
+
+.registerBtn:hover {
+    background-color: #6aa1b2;
+    color: #ffffff;
+    cursor: pointer;   
+}
+
+.eye {
+    width: 15%;
+    padding: 10px;
+}

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="css/loginForms.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>
+                <a href=""><img src="images/logo.jpg" alt="RMedia Logo"></a>
+                <input type="search" name="search" id="search" placeholder="Search...">
+            </h1>
+            <div id="alert"><!--Dynamic Alert--></div>
+        </div>  
+    </header>
+    <main>
+        <form action="" id="myForm" style="max-width: 500px;margin-top: 5%;">
+            <h2 class="remove-padding padBottom-10">Login</h2>
+            <hr class="remove-padding">
+
+            <div id="formContent">
+                <div class=" padTop-20 padBottom-10">
+                    <label for="email" class="column-align "><b class="padBottom-10">Email</b>
+                        <input type="email" placeholder="Registered Email" name="email" id="email" required>
+                    </label>
+                </div>
+                <p id="emailMsg" class="padTop-10"></p>
+
+                <div class="wrap" id="passwordArea">
+                    <label for="password" ><b>Password</b>
+                        <div class="wrap wrap-password">
+                            <input style="width: 85%;" type="password" placeholder="" name="password" id="password" minlength="8" required >
+                            <img style="height: 50px;" src="images/eye.svg" alt="Eye" class="eye" id="openEye1">
+                        </div>
+                    </label>
+                </div>
+                <p id="passwordAreaMsg" class="column-align-msg"></p>
+                
+                <hr>
+                <div class="wrap padTop-10">
+                    <a href="http://127.0.0.1:5500/register.html" >New User?</a>
+                    <button type="submit" class="registerBtn" id="loginButton">Sign in</button>
+                </div>
+            </div>
+        </form>
+    </main>
+
+    <script type="module" src="scripts/utils.js"></script>
+    <script src="scripts/login.js"></script>
+</body>
+</html>

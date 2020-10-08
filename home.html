@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -9,17 +10,18 @@
         <header>
             <div class="container">
                 <h1>
-                    <a href="">
-                        <img src="images/logo.jpg" alt="RMedia Logo">
-                    </a>
+                    <a href=""><img src="images/logo.jpg" alt="RMedia Logo"></a>
                     <input type="search" name="search" id="search" placeholder="Search...">
                 </h1>
+                <div id="alert"><!--Dynamic Alert--></div>
+                <div id="logout"><span id="display-name"><!--Username--></span></div>
             </div>  
         </header>
 
         <!--main div class="container"-->
-        <main class="container">
+        <main class="container" id="main">
             <div class="content">
+                
                 <!--Left Section: Navbar-->
                 <aside class="menu">
                 </aside>
@@ -27,16 +29,24 @@
                 <!--Middle Section: Content-->
                 <section class="middle-sec">
                     <div class="text-wrap">
-                        <h2>Error 404!</h2>
-                        <p>Requested page doesnot exist on this server.</p>
-                        
+                        <!--Add button: Read More-->
+                        <!--Content to display after Read More-->
                     </div>
+
+                    <h3 class="table__heading"><!--Table Heading --></h3>
+
+                    <table id="pageTable"> <!--Dynamic Table Contents -->
+                        <thead></thead>
+                        <tbody></tbody>
+                    </table>
+                    
                 </section>
 
                 <!--Right Section: Displaying Posts-->
                 <article class="latest-posts"></article>
             </div>
         </main>
+        
         <footer>
             <div class="container">
                 <ul>
@@ -47,8 +57,11 @@
                 </ul>
             </div>
         </footer>
+
         <script type="module" src="scripts/utils.js"></script>
         <script type="module" src="scripts/menu.js"></script>
+        <script type="module" src="scripts/home.js"></script>
+        <script type="module" src="scripts/table.js"></script>
         <script type="module" src="scripts/latestPosts.js"></script>
         <script src="scripts/logout.js"></script>
     </body>

@@ -1,22 +1,20 @@
 import createJsonRequest from "./utils.js";
+import {tableHeader, tableContent } from "./table.js";
+import {configFileBaseUrl, apiFileBaseUrl} from "./config.js";
 
-let method = 'GET', url = "http://127.0.0.1:5500/apis/home.json";
+let method = 'GET', url = `${apiFileBaseUrl}home.json`,
+mappingUrl = `${configFileBaseUrl}htmlJsonFileMapping.json`;
 
 // Dynamic Home Page Data
 createJsonRequest( method, url, function( err, response ) {
 
-    if(err) { 
-        console.log("Error occured while processing JSON!"); 
-    }
+    if(err) alert("Error occured while processing JSON!"); 
     else {
 
         const parentDivElement = document.querySelector(".text-wrap");
         /* 
             Element to create ~
-            <h2>
-                RMedia
-                <img src="images/main-image.jpg" alt="" class="img-wrap">
-            </h2>
+            <h2> RMedia<img src="images/main-image.jpg" alt="" class="img-wrap"></h2>
         */
         const heading = document.createElement('h2');
         heading.innerText = response.contentHeading;
@@ -27,24 +25,17 @@ createJsonRequest( method, url, function( err, response ) {
         image.setAttribute('class', "img-wrap");
         heading.appendChild(image);
 
-        /* ==================================================================================================== */
-
         /* Content in home */
         const mainContent = document.createElement('p');
         const contentText = response.contentParagraph;
         mainContent.innerText = contentText.slice(0, response.textVisibleLength);
         parentDivElement.appendChild(mainContent);
 
-        /*
-            Element to create ~
-            <!--Add button: Read More-->
-            <button id="read">Read More</button>
-        */
+        // Read more button
         const buttonReadMore = document.createElement('button');
         buttonReadMore.setAttribute("id", "read");
         buttonReadMore.innerText = "Read More";
 
-        // Flag action
         const readMoreContent = document.createElement('p');
         readMoreContent.style.display = "none";
 
@@ -66,27 +57,20 @@ createJsonRequest( method, url, function( err, response ) {
         if (contentText.length > response.textVisibleLength){
             parentDivElement.appendChild(buttonReadMore);
         }
-        
-        /* ================================================================================= */
-        /*
-            <!--Make dynamic-->
-            <thead >
-                <tr>
-                    <th>Lorem</th>
-                    <th>Lorem</th>
-                    <th>Lorem</th>
-                    <th>Lorem</th>
-                </tr>
-            </thead>
-        */
-        const tableHead = document.querySelector("table thead");
-        const tableRow = document.createElement("tr");
-        response.tableHeaders.forEach(element => {
-            const rowHead = document.createElement("th");
-            rowHead.innerText = element; 
-            tableRow.appendChild(rowHead);
-        });
-        tableHead.appendChild(tableRow);
+
+        // Table Area heading
+        const tableHead = document.querySelector(".table__heading");
+        tableHead.innerText = response.tableHeading;
+        parentDivElement.appendChild(tableHead);
     }
 });
 
+const htmlName = location.href.split("/").pop(); // Get file name
+createJsonRequest(method, mappingUrl, (err, response) => {
+    for (let page of response){
+        if(page.html === htmlName) {
+            tableHeader(method, page.tableHeader);
+            tableContent(method, page.tableHeader, page.tableContent);
+        }
+    }
+});

@@ -1,24 +1,17 @@
 import createJsonRequest from "./utils.js";
+import {apiFileBaseUrl} from "./config.js";
 
-let pageNotFound = "../pageNotFound.html";
-
-let method = 'GET',
-url = "http://127.0.0.1:5500/apis/menu.json";
+var method = 'GET', url = `${apiFileBaseUrl}menu.json`, pageNotFound = "../pageNotFound.html";
 
 createJsonRequest( method, url, function( err, response ) {
 
     if( err ) { 
-        console.log("Error occured while processing JSON!"); 
+        alert("Error occured while processing JSON!"); 
     }
     else {
         /* Element to create ~
             <nav>
-                <ul class="nav__main">
-                    <li><a href="pageNotFound.html">Home</a></li>
-                    <li><a href="">About</a></li>
-                    <li><a href="">Service</a></li>
-                    <li><a href="">Contact</a></li>
-                </ul>
+                <ul class="nav__main"> <li><a href="pageNotFound.html">Home</a></li> </ul>
             </nav>
         */
         const parentElement = document.querySelector(".menu");

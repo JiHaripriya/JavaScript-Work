@@ -1,22 +1,16 @@
 import createJsonRequest from "./utils.js";
+import {apiFileBaseUrl} from "./config.js";
 
 var method = 'GET',
-url = "http://127.0.0.1:5500/apis/latestPosts.json";
+url =  `${apiFileBaseUrl}latestPosts.json`;
 
 createJsonRequest( method, url, function( err, response ) {
 
     if( err ) { 
-        console.log("Error occured while processing JSON!"); 
+        alert("Error occured while processing JSON!"); 
     }
     else {
-        /* Latest Posts 
-            <h3>Latest Posts</h3>
-            <ul>
-                <li><a href=""><img src="images/post-image.jpg" alt=""></a></li>
-                <li><a href=""><img src="images/post-image.jpg" alt=""></a></li>
-                <li><a href=""><img src="images/post-image.jpg" alt=""></a></li>
-            </ul>
-        */
+        /* <h3>Latest Posts</h3> */
         const articleParent = document.querySelector(".latest-posts");
 
         const title = document.createElement('h3');
@@ -26,6 +20,7 @@ createJsonRequest( method, url, function( err, response ) {
         const ulElement = document.createElement("ul");
         articleParent.appendChild(ulElement);
 
+        // Generating list items for latest posts
         response.latestPosts.forEach(element => {
             const liElement = document.createElement("li");
 

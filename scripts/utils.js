@@ -1,5 +1,5 @@
 // Fetch JSON from server using HTTP Request
-var createJsonRequest = function( httpMethod, url, callback ) {
+var createJsonRequest = (httpMethod, url, callback) => {
 
     let xhr = new XMLHttpRequest();
     xhr.open( httpMethod, url, true);
@@ -10,22 +10,17 @@ var createJsonRequest = function( httpMethod, url, callback ) {
         }  
     }; 
 
-    xhr.onerror = function() {
-        callback( this.response );
-    };
-
+    xhr.onerror = function() { callback(this.response, null); };
     xhr.send();
 }
 
 export default createJsonRequest;
 
-/*.................................................................................................................*/
-
-// Search - Highlight
+// Search Functionality
 const searchBar = document.getElementById("search");
 
 searchBar.addEventListener(('click'), () => {
-    if (searchBar.value != ""){
+    if (searchBar.value != "") {
         window.location.reload();
     }
 });

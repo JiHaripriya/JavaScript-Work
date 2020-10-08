@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="css/loginForms.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>
+                <a href=""><img src="images/logo.jpg" alt="RMedia Logo"></a>
+                <input type="search" name="search" id="search" placeholder="Search...">
+            </h1>
+            <div id="alert"><!--Dynamic Alert--></div>
+        </div>  
+    </header>
+    <main>
+        <form action="" id="myForm" >
+            <h2 class="remove-padding padBottom-10">Registration</h2>
+            <hr class="remove-padding">
+
+            <div id="formContent">
+                <div class="wrap padTop-20 padBottom-10">
+                    <label for="firstName" class="column-align "><b class="padBottom-10">First Name</b>
+                        <input type="text" placeholder="First Name" name="firstName" id="firstName" required maxlength="25" minlength="3" pattern="[A-Za-z\sA-Za-z]{0,25}">
+                    </label>
+                    <label for="lastName" class="column-align"><b class="padBottom-10">Last Name</b>
+                        <input type="text" placeholder="Last Name" name="lastName" id="lastName" required maxlength="25" minlength="8" pattern="[A-Za-z\sA-Za-z]{0,25}">
+                    </label>
+                </div>
+                <p id="nameMsg" class="padTop-10"></p>
+
+                <div class="dob wrap">
+                    <label for="dob" class="column-align "><b class="padBottom-10">Date of Birth</b>
+                        <input type="date" name="dob" id="dob"  required>
+                    </label>
+
+                    <label for="email" class="column-align "><b class="padBottom-10">Email</b>
+                        <input type="email" placeholder="me@example.com" name="email" id="email" required>
+                    </label>
+                </div>
+                <div class="wrap">
+                    <p id="dobMsg" class="padTop-10 column-align "></p>
+                    <p id="emailMsg" class="padTop-10 column-align "></p>
+                </div>
+                
+                <div class="wrap padTop-10 padBottom-10">
+                    <label for="phone" class="column-align padBottom-10"><b class="padBottom-10">Phone Number</b>
+                        <div class="wrap">
+                            <select id="countryCode" name="countryCode" class="row-align">
+                                <option value="india" selected>+91</option>
+                                <option value="japan">+81</option>
+                            </select>
+                            <input class="row-align width-85 " type="tel" placeholder="Enter 10-digit mobile number" name="phone" id="phone" required maxlength="10">
+                        </div>
+                    </label>
+    
+                    <label for="gender" class="column-align "><b class="padBottom-10">Gender</b>
+                        <select name="gender" id="gender">
+                            <option value="female">Female</option>
+                            <option value="male">Male</option>
+                            <option value="other">Other</option>
+                            <option value="notsay" selected>I'd rather not say</option>
+                        </select>
+                    </label>
+                </div>
+                <p id="phoneMsg" class="column-align-msg"></p>
+
+                <div class="wrap padBottom-10 padTop-10" id="passwordArea">
+                    <label for="password" class="column-align"><b>Password</b>
+                        <div class="wrap wrap-password">
+                            <input class= "width-85" type="password" placeholder="" name="password" id="password" minlength="8" required >
+                            <img src="images/eye.svg" alt="Eye" class="eye" id="openEye1">
+                        </div>
+                    </label>
+                    
+                    <label for="confirmPassword" class="column-align"><b >Confirm Password</b>
+                       <div class="wrap wrap-password">
+                            <input class= "width-85" type="password" placeholder="" name="confirmPassword" id="confirmPassword" minlength="8" required >
+                            <img src="images/eye.svg" alt="Eye" class="eye" id="openEye2">
+                       </div>
+                    </label>
+                    
+                </div>
+                <p id="passwordAreaMsg" class="column-align-msg"></p>
+                
+                <hr>
+                <div class="wrap terms-conditions padTop-20 ">
+                    <input type="checkbox" name="checkbox" value="check" id="agree">
+                    <span class="terms-conditions__span">I have read and agreed to the Terms and Conditions and Privacy Policy</span>
+                </div>
+                <p id="termsMessage" class="column-align-msg padTop-10"></p>
+
+                <div class="wrap padTop-10">
+                    <a href="http://127.0.0.1:5500/login.html" >Sign in instead</a>
+                    <button type="submit" class="registerBtn" id="registerButton">Register</button>
+                </div>
+                
+            </div>
+        </form>
+    </main>
+
+    <script type="module" src="scripts/utils.js"></script>
+    <script type="module" src="scripts/register.js"></script>
+    
+</body>
+</html>
